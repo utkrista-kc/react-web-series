@@ -1,16 +1,17 @@
 1. VS Code uses Emmet. It generates code for you. Suppose typing html:5 gives a basic skeleton of html for you. 
 2. We can create same h1 header in html using the script tags.
-   <script>
+
+ ``` <script>
         const heading = document.createElement("h1");
         heading.innerHTML = "Hello World from Javascript!";
         const root = document.getElementById("root");
         root.appendChild(heading);
-    </script>
+    </script>```
     <script> tags are always placed inside the <head> tags or just before closing the <body> tag in HTML document. JS files are linked in bottom of the body because whenever browser encounters JS, it stops HTML parsing and starts loading and executing the script. If added to top, it would make page rendering slow and it would take long to load page. Not just that DOM would not be fully rendered, JS would not be able to manipulate the elements in DOM.
 
 3. Browser understand keywords like document, innerHTML as they already have a Javascript engine in them. But the browser do not know react or do not understand React. So, one way of adding React to our project is through CDNs. 
-<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+```<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>```
 This is one way of injecting react to our project. These files contain all Javascript code with functions and variables. React at the end of the day is just Javascript files. So, these files contain React code. Facebook developers have written this code. When we do this, we import the react code. As soon as we injected these files into these project, when we go to browser console and type React, we get React functions or methods that we injected.
 We have to always import or inject these files before loading our file with React code.
 
@@ -123,8 +124,7 @@ react.development.js version is meant for development. It includes Source Maps, 
 
 6. What is async and defer?
 On the webpage, script tags are most common to block the parsing of HTML document. As the browser parses HTML document, when it finds script tag, it waits for script to download and execute it. A new request will be executed to fetch script file on server. Only after this, parsing is resumed. Including script without async or defer is the default way to load scripts in HTML document. This is harmful when we place scripts in head tag. Until users see the title of the page, it would take some time to load.
-```
-<script async > ```- script is downloaded in paralled with HTML parsing. When the script is downloaded, it is executed
+```<script async >```- script is downloaded in paralled with HTML parsing. When the script is downloaded, it is executed
 blocking the rendering of HTML until it is finished. The execution order of the scripts differ as it might not be the 
 same order in which you load the scripts.
 
