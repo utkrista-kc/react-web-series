@@ -6,7 +6,8 @@
         heading.innerHTML = "Hello World from Javascript!";
         const root = document.getElementById("root");
         root.appendChild(heading);
-    </script>```
+    </script>
+   ```
     <script> tags are always placed inside the <head> tags or just before closing the <body> tag in HTML document. JS files are linked in bottom of the body because whenever browser encounters JS, it stops HTML parsing and starts loading and executing the script. If added to top, it would make page rendering slow and it would take long to load page. Not just that DOM would not be fully rendered, JS would not be able to manipulate the elements in DOM.
 
 3. Browser understand keywords like document, innerHTML as they already have a Javascript engine in them. But the browser do not know react or do not understand React. So, one way of adding React to our project is through CDNs. 
