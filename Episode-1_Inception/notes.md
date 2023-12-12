@@ -1,7 +1,8 @@
 1. VS Code uses Emmet. It generates code for you. Suppose typing html:5 gives a basic skeleton of html for you. 
 2. We can create same h1 header in html using the script tags.
 
- ``` <script>
+ ``` 
+    <script>
         const heading = document.createElement("h1");
         heading.innerHTML = "Hello World from Javascript!";
         const root = document.getElementById("root");
