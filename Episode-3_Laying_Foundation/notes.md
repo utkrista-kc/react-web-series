@@ -90,7 +90,9 @@ It represents type of content in between <script></script> tag. We can use async
 {TitleComponent} vs {<TitleComponent />} vs {<TitleComponent></TitleComponent>} in JSX
 {TitleComponent} - to load a element
 {<TitleComponent />}
- {<TitleComponent></TitleComponent>} - both to load component```
+ {<TitleComponent></TitleComponent>} - both to load component
+
+```
 
 # Additional
 
