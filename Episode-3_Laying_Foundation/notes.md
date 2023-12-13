@@ -31,7 +31,9 @@ const heading = (
 );
 ```
 We cannot render a React component using root.render() as it is for rendering a react element. We can render using the following syntax such that babel understands.
-```root.render(<HeadingComponent />);
+```
+root.render(<HeadingComponent />);
+
 ```
 React elements can also be loaded into the component using same format.
 Combining two components into one is component composition. For example, putting one component into another. We can also use normal functions instead of arrow functions. But arrow function is new way and cleaner way.
@@ -81,10 +83,11 @@ This prevents XSS(Cross-site-scripting) attacks.
 
 3. Role of type attribute in script tag? What options can I use there?
 It represents type of content in between <script></script> tag. We can use async, defer, crossorigin, src, type, refererpolicy, etc.
-<script type="module"> represent that module is being pointed.
+```<script type="module"> represent that module is being pointed.```
 
 4. 
-```{TitleComponent} vs {<TitleComponent />} vs {<TitleComponent></TitleComponent>} in JSX
+```
+{TitleComponent} vs {<TitleComponent />} vs {<TitleComponent></TitleComponent>} in JSX
 {TitleComponent} - to load a element
 {<TitleComponent />}
  {<TitleComponent></TitleComponent>} - both to load component```
@@ -107,8 +110,10 @@ babel-plugin-transform-remove-console.
 * Functional component is nothing but a JS function that returns JSX or react element or composition of react element or component.
 Functional component name starts with capital letter.
 We can also skip to write return. It is arrow function thing.
+```
 function => () => ()
 function => () => {return ()}
+```
 
 * Component Composition - Nested Components
 React has powerful composition model so in order to reuse components, we  need to use component composition instead of inheritance. They donot recommend using inheritance hierarchies for creating components.
