@@ -127,6 +127,7 @@ needs to figure out optimal way of applying updates on real DOM based on the rec
 state of art alogrithms takes O(n^3) where n is the number of elements in tree. If React has 1000 elements in tree, it is costly
 for comparison. React implements heuristic O(n) algorithm with two assumptions:
 > two elements of different type will have different tree
+
 > children elements will have a key
 
 When root elements have different tree, old DOM nodes are destroyed and new are created. When DOM elements has same type, React looks at DOM attributes and only updadtes the attribute changes.In case of children, if no key is provided, when adding items at start of list, it will re-render everything as it doesnot know what element it can persist. In order to solve this, React supports key attribute. The key should be unique among siblings, not globally. If no options, we can use index as key but only if there is no need of items to be re-ordered. If they need to be re-order, the process will be slow. Keys should be stable, predictable and unique. Unstable keys such as produced by Math.random() will cause performance degradation and loss of state in child components.
