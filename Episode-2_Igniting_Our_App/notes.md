@@ -89,11 +89,14 @@ It improves the development experience by updating the modules at runtime withou
 8. List down your favourite 5 superpowers of Parcel and describe any 3 of them in your own words.
 > Minification
 It includes minifiers for JS, HTML, SVG, CSS. It reduces size of output bundles (rename variables shorter, remove whitespace etc)
+
 > Tree shaking
 It analyze which modules are not in use and remove in production build
+
 > Image Optimization
 It support resizing, converting and optimizing images. It also supports lossless image optimization of png and jpeg files by 
 default in production mode. It reduces size of images without reducing the quality.
+
 > Hot Module Replacement (HMR)
 Updates modules in browser at runtime without needing for a whole page refresh. Css changes are also automatically applied.
 
@@ -157,8 +160,11 @@ Parcel:
 Value of the script type indicate data represented by script. 
 Attribute is not set (default), empty string or JS MIME type. Some MIME types are: 
 > importmap: It indicates body of element contains import map (JSON object that developers can use to control how browser resolve module specifiers when importing JS modules.)
+
 > module: Code to be treated as JS module. Processing of script contents is deferred by default. charset and defer attributes have no effect. It requires use of CORS for cross-origin fetching.
+
 > speculationrules: Value indicates body of element contains speculatioin rules. Specularioin rules take form of JSON object to determine what resources should be prefetched or prerendered by the browser. 
+
 > any other value: It is treated as data block and would not be processed by browser. Developers must use valid MIME type that is not a JS MIME type to denote data blocks. All other attributes will be ignored including src.
 
 
