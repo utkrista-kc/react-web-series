@@ -1,55 +1,73 @@
 import RestaurantCard from "./RestaurantCard";
-import resList from "../utils/mockData";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Shimmer from "./Shimmer";
 
 const Body = () => {
   // Local state variable - super powerful variable
-  const arr = useState(resList); // default value passed
-  const [listofRestaurants, setListOfRestaurants] = arr;
+  const [listOfRestaurants, setListOfRestaurants] = useState([]); // default value passed
 
-  let listofRestaurantsJS = [
-    {
-      data: {
-        id: "73011",
-        name: "KFC",
-        cloudinaryImageId: "bdcd233971b7c81bf77e1fa4471280eb",
-        cuisines: ["American", "Snacks", "Biryani"],
-        costForTwo: 30000,
-        deliveryTime: 31,
-        avgRating: "3.5",
-      },
-    },
-    {
-      data: {
-        id: "73012",
-        name: "KFC",
-        cloudinaryImageId: "bdcd233971b7c81bf77e1fa4471280eb",
-        cuisines: ["American", "Snacks", "Biryani"],
-        costForTwo: 40000,
-        deliveryTime: 36,
-        avgRating: "4.5",
-      },
-    },
-  ];
-  return (
+  const [filteredRestaurant, setFilteredRestaurant] = useState([]);
+  const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const data = await fetch(
+      "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9715987&lng=77.5945627&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+    ); // Fetch returns a promise, we can use .then .catch or we can use async await
+
+    const json = await data.json();
+    setListOfRestaurants(
+      json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
+    setFilteredRestaurant(
+      json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
+  };
+
+  return listOfRestaurants.length == 0 ? (
+    <Shimmer />
+  ) : (
     <div className="body">
       <div className="filter">
+        <div className="search">
+          <input
+            type="text"
+            className="search-box"
+            value={searchText}
+            onChange={(e) => {
+              setSearchText(e.target.value);
+            }}
+          />
+          <button
+            onClick={() => {
+              const filteredRestaurant = listOfRestaurants.filter((res) =>
+                res.info.name.toLowerCase().includes(searchText.toLowerCase())
+              );
+              setFilteredRestaurant(filteredRestaurant);
+            }}
+          >
+            Search
+          </button>
+        </div>
         <button
           className="filter-btn"
           onClick={() => {
-            const filteredList = listofRestaurants.filter(
-              (res) => res.data.avgRating > 4
+            const filteredList = listOfRestaurants.filter(
+              (res) => res.info.avgRating > 4
             );
 
-            setListOfRestaurants(filteredList);
+            setFilteredRestaurant(filteredList);
           }}
         >
           Top Rated Restaurants
         </button>
       </div>
       <div className="res-container">
-        {listofRestaurants.map((restaurant) => (
-          <RestaurantCard key={restaurant.data.id} resData={restaurant} />
+        {filteredRestaurant.map((restaurant) => (
+          <RestaurantCard key={restaurant?.info?.id} resData={restaurant} />
         ))}
       </div>
     </div>
