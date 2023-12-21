@@ -33,7 +33,7 @@ describe("Contact Us Page Test Case", () => {
     // Quering
     const inputBoxes = screen.getAllByRole("textbox"); // When multiple items we use getAll
 
-    console.log(inputBoxes.length); // An array is returned of React virtual DOM element
+    // console.log(inputBoxes.length); // An array is returned of React virtual DOM element
 
     expect(inputBoxes.length).toBe(2);
   });
