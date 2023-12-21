@@ -255,3 +255,81 @@ it("should render Restaurant component with props data", () => {
 });
 
 ```
+
+12. In integration testing, we will be testing the search feature. When we search some restaurant, the list of restaurants should be filtered. 
+```
+import { render, screen } from "@testing-library/react";
+import Body from "../Body";
+
+it("Should render the Body component with Search", () => {
+  render(<Body />);
+});
+
+Error: The promise rejected with the reason "ReferenceError: fetch is not defined".] {
+  code: 'ERR_UNHANDLED_REJECTION'
+}
+```
+It is because when Body component is render, it is rendering in JS-dom. And the fetch that we have used to load api is the super power of browser. It is not there in JS. But fetch is not in core of JS, it is given by browser. So, we have to write mock function for fetch.
+```
+global.fetch = jest.fn(() => {
+  return Promise.resolve({
+    json: () => {
+      return Promise.resolve(data);
+    },
+  });
+});
+```
+We try to mock fetch function exactly like that our browser returns. We cannot make API call, as it is not browser to make calls to external calls.
+Body component also has async function and state updates inside it. So, we got a warning that we need to wrap using act function.
+```
+When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+
+import { act } from "react-dom/test-utils";
+it("Should render the Body component with Search", async () => {
+  await act(async () => render(<Body />));
+});
+We wrap render method with act. act takes async function and then we render component.
+```
+
+
+13. We can make HMR for test files. Add this to package.json scripts ```    "watch-test": "jest -watch"```
+
+14. Writing something to input box is triggering onChange event. So, if anything does not work, getByTestId works.
+
+```  const searchInput = screen.getByTestId()```
+We can give a testId using ```data-testid="searchInput"```
+```
+ fireEvent.change(searchInput, {})
+ We simulate typing on input box using change event. and with the function,we pass a object that simulates everthing in onChange handler in the real Body component.
+
+We can use as:
+ fireEvent.change(searchInput, { target: { value: "burger" } });
+Simulate clicking button as: 
+ fireEvent.click(searchBtn);
+```
+15. beforeAll() function runs before all the test cases inside describe function.
+beforeEach() - before each test cases it will run. Helpful for cleanup tasks.
+```
+  beforeAll(() => {
+    console.log("Before All");
+  });
+
+  beforeEach(() => {
+    console.log("Before Each");
+  });
+
+    afterAll(() => {
+    console.log("After All");
+  });
+
+  afterEach(() => {
+    console.log("After Each");
+  });
+```

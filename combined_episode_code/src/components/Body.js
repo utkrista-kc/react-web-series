@@ -23,6 +23,7 @@ const Body = () => {
     const data = await fetch(RESTAURANT_API); // Fetch returns a promise, we can use .then .catch or we can use async await
 
     const json = await data.json();
+
     setListOfRestaurants(
       json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
@@ -49,6 +50,7 @@ const Body = () => {
         <div className="search m-4  p-4">
           <input
             type="text"
+            data-testid="searchInput"
             className="border border-solid border-black"
             value={searchText}
             onChange={(e) => {
@@ -94,6 +96,7 @@ const Body = () => {
         {filteredRestaurant.map((restaurant) => (
           <Link
             to={"/restaurants/" + restaurant.info.id}
+            data-testid="resCard"
             key={restaurant?.info?.id}
           >
             {restaurant.info.isOpen ? (
