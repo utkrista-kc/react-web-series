@@ -9,7 +9,7 @@ const styleCard = {
 const RestaurantCard = (props) => {
   const { loggedInUser } = useContext(UserContext);
   const { resData } = props;
-
+  //console.log(resData);
   const { name, cuisines, avgRating, costForTwo, sla, cloudinaryImageId } =
     resData?.info;
 

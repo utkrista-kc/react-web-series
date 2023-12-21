@@ -188,3 +188,70 @@ describe("Contact Us Page Test Case", () => {
 ```
 We can have multiple describe blocks.
 9. Instead of "test", we can even write "it". There is no difference between "it" and "test". "it" is basically an alias of "test". Both are the same thing. Reading the cases becomes easy with "it".
+
+10. We try to write test cases for header component and check that the header component should have login button.
+```
+import Header from "../Header";
+import { render } from "@testing-library/react";
+
+it("Should load Header Component with a login button", () => {
+  render(<Header />);
+});
+
+```
+The test case fails. It is because our application is using redux. We are rendering Header in JS-dom. JS DOM understand JSX or JS code but it doesnot understand redux such as useSelector() so that it fails. So, we have to provide redux store to Header when rendering. Along with this "Link" component also causes error because it comes from react-router-dom. So, we have to provide router to this Header component.
+
+```
+import { Provider } from "react-redux";
+import Header from "../Header";
+import { render, screen } from "@testing-library/react";
+import appStore from "../../utils/appStore";
+import { BrowserRouter } from "react-router-dom";
+import "@testing-library/jest-dom";
+
+it("Should render Header Component with Cart items 0", () => {
+  render(
+    <BrowserRouter>
+      <Provider store={appStore}>
+        <Header />
+      </Provider>
+    </BrowserRouter>
+  );
+  const CartItems = screen.getByText(/Cart/); // We can also pass regex over here
+  expect(CartItems).toBeInTheDocument();
+});
+```
+We can fire click event for the button in this way: 
+```
+
+it("Should change Login Button to Logout On Click", () => {
+  render(
+    <BrowserRouter>
+      <Provider store={appStore}>
+        <Header />
+      </Provider>
+    </BrowserRouter>
+  );
+  const loginButton = screen.getByRole("button", { name: "Login" });
+  fireEvent.click(loginButton);
+  const logoutButton = screen.getByRole("button", { name: "Logout" });
+  expect(logoutButton).toBeInTheDocument();
+});
+
+```
+
+11. Testing a component by passing props can be done as: 
+```
+import { render, screen } from "@testing-library/react";
+import RestaurantCard from "../RestaurantCard";
+import MOCK_DATA from "../mocks/resCardMock.json";
+import "@testing-library/jest-dom";
+
+it("should render Restaurant component with props data", () => {
+  render(<RestaurantCard resData={MOCK_DATA} />);
+
+  const name = screen.getByText("Veena Stores");
+  expect(name).toBeInTheDocument();
+});
+
+```
